@@ -61,7 +61,7 @@ class Web3Client:
         return int(tx_count_raw, 16)
 
     def get_gasprice(self):
-        """Get the gas price in Gwei units"""
+        """Get the gas price in wei units"""
         gas_price_raw = self.jsonrpc.request("eth_gasPrice")[2:]
         if gas_price_raw == "":
             raise Exception("Node has no gas price method")
