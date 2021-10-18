@@ -134,10 +134,10 @@ class WebSocketClient:
             for event in self.websock_conn.events():
                 if isinstance(event, AcceptConnection):
                     logger.debug("WebSocket connection established.")
-                    self.received_messages.insert(0, "established")
+                    self.received_messages.append("established")
                 elif isinstance(event, RejectConnection):
                     logger.debug("WebSocket connection rejected.")
-                    self.received_messages.insert(0, "rejected")
+                    self.received_messages.append("rejected")
                 elif isinstance(event, CloseConnection):
                     logger.error(
                         "WebSocket Connection closed: code=%i reason=%s",
@@ -156,7 +156,7 @@ class WebSocketClient:
                         logger.log(
                             5, "WebSocket Text message received : %s", full_message
                         )
-                        self.received_messages.insert(0, full_message)
+                        self.received_messages.append(full_message)
                         self.partial_txtmessages = []
                 elif isinstance(event, BytesMessage):
                     self.partial_binmessages.append(event.data)
@@ -165,7 +165,7 @@ class WebSocketClient:
                         logger.log(
                             5, "WebSocket Binary message received : %s", full_message
                         )
-                        self.received_messages.insert(0, full_message)
+                        self.received_messages.append(full_message)
                         self.partial_binmessages = []
 
                 else:

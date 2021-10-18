@@ -127,4 +127,4 @@ class HttpClient:
                     )
             if isinstance(event, Data):
                 logger.log(5, "Data received from HTTP query : %s", event.data)
-                self.received_messages.insert(0, event.data)
+                self.received_messages.append(event.data)

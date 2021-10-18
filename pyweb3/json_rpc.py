@@ -87,12 +87,12 @@ class JSONRPCclient:
     def get_response(self):
         """Listen to response, expect same id as the latest request sent"""
         self.cnx.get_messages()
-        for msg in self.cnx.received_messages:
-            reqid, result = json_rpc_unpack(msg)
-            if reqid != self.req_id:
-                raise Exception("JSON RPC response id mismatch")
-            logger.log(5, "Received RPC result: %s", result)
-            return result
+        msg = self.cnx.received_messages.pop()
+        reqid, result = json_rpc_unpack(msg)
+        logger.log(5, "Received RPC result: %s", result)
+        if reqid != self.req_id:
+            raise Exception("JSON RPC response id mismatch")
+        return result
 
     def request(self, method_name, params=None):
         """Send a RPC query and listen to response"""
