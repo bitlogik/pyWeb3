@@ -28,7 +28,6 @@ from h11 import (
     EndOfMessage,
     ConnectionClosed,
     NEED_DATA,
-    MUST_CLOSE,
     CLIENT,
 )
 
@@ -115,20 +114,17 @@ class HttpClient:
         while True:
             event = self.conn.next_event()
             if isinstance(event, EndOfMessage):
+                self.conn.send(ConnectionClosed())
+                self.close()
                 return
             if event is NEED_DATA:
-                if self.ssocket is not None:
-                    self.conn.receive_data(self.ssocket.receive())
-                    continue
-                return
+                self.conn.receive_data(self.ssocket.receive())
+                continue
             if isinstance(event, Response):
                 if event.status_code != 200:
                     raise HttpClientException(
                         f"Error in response code {event.status_code}"
                     )
-            if self.conn.our_state is MUST_CLOSE:
-                self.conn.send(ConnectionClosed())
-                self.close()
             if isinstance(event, Data):
                 logger.log(5, "Data received from HTTP query : %s", event.data)
                 self.received_messages.insert(0, event.data)
