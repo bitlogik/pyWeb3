@@ -17,7 +17,7 @@ setup(
     description="Web3 RPC client for Python wallets",
     long_description=readme + "\n\n",
     long_description_content_type="text/markdown",
-    keywords="blockchain wallet cryptography",
+    keywords="web3 blockchain wallet cryptography",
     author="BitLogiK",
     author_email="contact@bitlogik.fr",
     url="https://github.com/bitlogik/pyWeb3",
