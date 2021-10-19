@@ -107,8 +107,8 @@ class HttpClient:
     def get_messages(self):
         """Read data from server"""
         if self.ssocket.conn is None:
-            logger.debug("Socket was closed by remote party")
             self.close()
+            logger.debug("Socket was closed by remote party")
             return
         # Listen to server data
         while True:
