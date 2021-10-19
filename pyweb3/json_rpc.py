@@ -16,11 +16,16 @@
 
 """JSON RPC for pyWalletConnect"""
 
-
+from time import sleep
 from logging import getLogger
 from json import dumps, loads
 from .http_client import HttpClient
 from .websocket import WebSocketClient
+
+
+class JSONRPCexception(Exception):
+    """Exception when the Web3 call has no result, but an error field."""
+
 
 logger = getLogger(__name__)
 
@@ -54,20 +59,21 @@ def json_rpc_unpack(buffer):
     if resp_obj["jsonrpc"] != "2.0":
         raise Exception(f"Server is not JSONRPC 2.0 but {resp_obj.jsonrpc}")
     if "error" in resp_obj:
-        raise Exception(resp_obj["error"])
+        raise JSONRPCexception(resp_obj["error"])
     return resp_obj["id"], resp_obj["result"]
 
 
 class JSONRPCclient:
     """WebSocket and HTTPS JSON-RPC client"""
 
-    def __init__(self, url_api, user_agent="pyWeb3"):
+    def __init__(self, url_api, user_agent="pyWeb3", retries=3):
         if url_api.startswith("wss:"):
             self.cnx = WebSocketClient(url_api, user_agent)
         elif url_api.startswith("https:"):
             self.cnx = HttpClient(url_api, user_agent)
         else:
             raise Exception("Only accept HTTPS and WebSocket connection scheme")
+        self.retry = retries
         self.req_id = 0
 
     def send_request(self, method_name, params=None):
@@ -99,4 +105,14 @@ class JSONRPCclient:
         if params is None:
             params = []
         self.send_request(method_name, params)
-        return self.get_response()
+        for nret in range(self.retry + 1):
+            try:
+                resp = self.get_response()
+                break
+            except JSONRPCexception:
+                if nret < self.retry:
+                    sleep(0.25)
+                    self.send_request(method_name, params)
+                else:
+                    raise
+        return resp
