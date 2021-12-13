@@ -44,10 +44,11 @@ class TLSsocket:
 
     def close(self):
         """Close the socket."""
-        if self.conn is not None:
-            logger.log(5, "Closing socket")
-            self.conn.close()
-            self.conn = None
+        if hasattr(self, "conn"):
+            if self.conn is not None:
+                logger.log(5, "Closing socket")
+                self.conn.close()
+                self.conn = None
 
     def send(self, data_buffer):
         """Send data to the host."""
