@@ -1,6 +1,10 @@
 
 # pyWeb3 changes log
 
+## 0.1.4
+
+* Improve queries retries
+
 ## 0.1.3
 
 * Improve queries reliability
