@@ -104,17 +104,15 @@ class JSONRPCclient:
         """Send a RPC query and listen to response"""
         if params is None:
             params = []
-        for nret in range(self.retry + 1):
+        for nret in range(self.retry):
             try:
                 self.send_request(method_name, params)
                 resp = self.get_response()
-                break
-            except KeyboardInterrupt:
-                raise
-            except:
-                if nret < self.retry:
-                    sleep(0.25)
-                    self.send_request(method_name, params)
+                return resp
+            except KeyboardInterrupt as exc:
+                raise exc
+            except Exception as exc:
+                if nret < self.retry - 1:
+                    sleep(0.3)
                 else:
-                    raise
-        return resp
+                    raise exc

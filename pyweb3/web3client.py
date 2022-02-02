@@ -28,7 +28,9 @@ class Web3Client:
 
     def get_balance(self, address, state="latest"):
         """Get native token balance"""
-        balraw = self.jsonrpc.request("eth_getBalance", [address, state])[2:]
+        balraw = self.jsonrpc.request("eth_getBalance", [address, state])
+        if balraw and len(balraw) >= 2:
+            balraw = balraw[2:]
         if balraw == "":
             return 0
         balance = int(balraw, 16)
