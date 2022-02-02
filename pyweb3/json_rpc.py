@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
-"""JSON RPC for pyWalletConnect"""
+"""JSON RPC for pyWeb3"""
 
 from time import sleep
 from logging import getLogger
