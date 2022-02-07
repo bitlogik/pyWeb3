@@ -29,12 +29,9 @@ class Web3Client:
     def get_balance(self, address, state="latest"):
         """Get native token balance"""
         balraw = self.jsonrpc.request("eth_getBalance", [address, state])
-        if balraw and len(balraw) >= 2:
-            balraw = balraw[2:]
-        if balraw == "":
-            return 0
-        balance = int(balraw, 16)
-        return balance
+        if balraw and len(balraw) >= 2 and balraw[:2] == "0x":
+            return int(balraw[2:], 16)
+        return 0
 
     def call(self, contract, command_code, data="", state="latest"):
         """eth call query"""
@@ -57,14 +54,14 @@ class Web3Client:
         """Read number of transaction done by this address"""
         tx_count_raw = self.jsonrpc.request(
             "eth_getTransactionCount", ["0x" + addr, state]
-        )[2:]
-        if tx_count_raw == "":
-            return 0
-        return int(tx_count_raw, 16)
+        )
+        if tx_count_raw and len(tx_count_raw) >= 2 and tx_count_raw[:2] == "0x":
+            return int(tx_count_raw[2:], 16)
+        raise Exception("Bad data when reading getTransactionCount")
 
     def get_gasprice(self):
         """Get the gas price in wei units"""
-        gas_price_raw = self.jsonrpc.request("eth_gasPrice")[2:]
-        if gas_price_raw == "":
-            raise Exception("Node has no gas price method")
-        return int(gas_price_raw, 16)
+        gas_price_raw = self.jsonrpc.request("eth_gasPrice")
+        if gas_price_raw and len(gas_price_raw) >= 2 and gas_price_raw[:2] == "0x":
+            return int(gas_price_raw[2:], 16)
+        raise Exception("Bad data when reading gasPrice")

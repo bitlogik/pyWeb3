@@ -73,6 +73,7 @@ In case the connection is WebSocket, the connection tunnel is maintained opened 
 
 `.get_balance( 0xAddress, [state] )`  
 Give the native balance of an 0x address string. The balance is given as integer in Wei units (10^-18 ETH).  
+Can return 0 Wei in case of issue when getting data.  
 The following state options are possible :
 * HEX String - an integer block number
 * String "earliest" for the earliest/genesis block
