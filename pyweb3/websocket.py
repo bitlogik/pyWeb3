@@ -67,15 +67,18 @@ class WebSocketClient:
         try:
             self.ssocket = TLSsocket(ws_url.hostname, port_num)
             self.websock_conn = WSConnection(ConnectionType.CLIENT)
+            page = ws_url.path
+            if ws_url.query:
+                page += f"?{ws_url.query}"
             logger.debug(
                 "Connecting to WebSocket Host=%s PathTarget=%s",
                 ws_url.hostname,
-                ws_url.path,
+                page,
             )
             self.send(
                 Request(
                     host=ws_url.hostname,
-                    target=ws_url.path or "/",
+                    target=page or "/",
                     extra_headers=[("User-Agent", user_agent)],
                 )
             )
