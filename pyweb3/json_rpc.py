@@ -29,6 +29,11 @@ class JSONRPCexception(Exception):
 
 logger = getLogger(__name__)
 
+DEFAULT_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) " "Gecko/20100101 Firefox/96.0"
+)
+
+
 # ---- Helpers about messages encoding
 
 
@@ -66,7 +71,7 @@ def json_rpc_unpack(buffer):
 class JSONRPCclient:
     """WebSocket and HTTPS JSON-RPC client"""
 
-    def __init__(self, url_api, user_agent="pyWeb3", retries=3):
+    def __init__(self, url_api, user_agent=DEFAULT_USER_AGENT, retries=3):
         if url_api.startswith("wss:"):
             self.cnx = WebSocketClient(url_api, user_agent)
         elif url_api.startswith("https:"):

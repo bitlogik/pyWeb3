@@ -36,10 +36,6 @@ from .tls_socket import TLSsocket
 
 
 DEFAULT_HTTPS_PORT = 443
-DEFAULT_USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) "
-    "Gecko/20100101 Firefox/96.0"
-)
 
 GLOBAL_TIMEOUT = 8  # seconds
 UNIT_WAITING_TIME = 0.4
@@ -56,7 +52,7 @@ class WebSocketClientException(Exception):
 class WebSocketClient:
     """WebSocket client with a host within HTTPS, send and decode messages."""
 
-    def __init__(self, wsURL, user_agent=DEFAULT_USER_AGENT):
+    def __init__(self, wsURL, user_agent):
         """Open the WebSocket connection to a given a URL."""
         ws_url = urlparse(wsURL)
         assert ws_url.scheme == "wss"
