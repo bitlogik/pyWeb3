@@ -54,6 +54,7 @@ class HttpClient:
         self.conn = None
         self.ssocket = None
         self.received_messages = []
+        self.partial_messages = []
         self.port_num = http_url.port or DEFAULT_HTTPS_PORT
         self.domain = http_url.hostname
         self.endpoint = http_url.path or "/"
@@ -116,15 +117,16 @@ class HttpClient:
             if isinstance(event, EndOfMessage):
                 self.conn.send(ConnectionClosed())
                 self.close()
+                self.received_messages.append(b"".join(self.partial_messages))
                 return
             if event is NEED_DATA:
                 self.conn.receive_data(self.ssocket.receive())
-                continue
             if isinstance(event, Response):
+                self.partial_messages = []
                 if event.status_code != 200:
                     raise HttpClientException(
                         f"Error in response code {event.status_code}"
                     )
             if isinstance(event, Data):
                 logger.log(5, "Data received from HTTP query : %s", event.data)
-                self.received_messages.append(event.data)
+                self.partial_messages.append(event.data)
