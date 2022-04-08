@@ -1,6 +1,4 @@
-
 # pyweb3
-
 
 ### A Web3 RPC client for Ethereum compatible wallets in Python
 
@@ -64,7 +62,7 @@ See the web3_demo script in demo folder.
 
 ## Interface methods of Web3Client
 
-`pyweb3.Web3Client( node_url, [user_agent] )`  
+`pyweb3.Web3Client( node_url, [user_agent], [retries] )`  
 Create a Web3 client from an URL.  
 node_url : the access URL (https or wss) to the RPC blockchain node.  
 user_agent: optional User-Agent header to use, a default web browser value is used. 
@@ -76,6 +74,7 @@ In case the connection is WebSocket, the connection tunnel is maintained opened 
 Give the native balance of an 0x address string. The balance is given as integer in Wei units (10^-18 ETH).  
 Can return 0 Wei in case of issue when getting data.  
 The following state options are possible :
+
 * HEX String - an integer block number
 * String "earliest" for the earliest/genesis block
 * String "latest" for the latest mined block
@@ -98,6 +97,15 @@ For state options, see get_balance.
 `.get_gasprice()`  
 Read the current node estimation for on-chain gas price. The gas price is given as integer in Wei units.  
 
+`get_logs( param )`  
+Call "eth_getLogs" with the given parameter.
+
+`set_filter( param )`  
+Call "eth_newFilter" with the given parameter.
+
+`get_filter( filter_id )`  
+Call "eth_getFilterLogs" with the given filter_id parameter.
+
 
 ## License
 
@@ -111,7 +119,6 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of  
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 See the GNU General Public License for more details.
-
 
 ## Support
 
