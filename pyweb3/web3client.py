@@ -65,3 +65,12 @@ class Web3Client:
         if gas_price_raw and len(gas_price_raw) >= 2 and gas_price_raw[:2] == "0x":
             return int(gas_price_raw[2:], 16)
         raise Exception("Bad data when reading gasPrice")
+
+    def get_logs(self, param):
+        return self.jsonrpc.request("eth_getLogs", [param])
+
+    def set_filter(self, param):
+        return self.jsonrpc.request("eth_newFilter", [param])
+
+    def get_filter(self, filter_id):
+        return self.jsonrpc.request("eth_getFilterLogs", [filter_id])
