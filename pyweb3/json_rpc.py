@@ -113,6 +113,6 @@ class JSONRPCclient:
                 raise exc
             except Exception as exc:
                 if nret < self.retry - 1:
-                    sleep(0.3)
+                    sleep(0.5)
                 else:
                     raise exc
