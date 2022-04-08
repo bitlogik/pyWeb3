@@ -97,19 +97,19 @@ For state options, see get_balance.
 `.get_gasprice()`  
 Read the current node estimation for on-chain gas price. The gas price is given as integer in Wei units.  
 
-`get_logs( param )`  
+`.get_logs( param )`  
 Call "eth_getLogs" with the given parameter.
 
-`set_filter( param )`  
+`.set_filter( param )`  
 Call "eth_newFilter" with the given parameter.
 
-`get_filter( filter_id )`  
+`.get_filter( filter_id )`  
 Call "eth_getFilterLogs" with the given filter_id parameter.
 
 
 ## License
 
-Copyright (C) 2021  BitLogiK SAS
+Copyright (C) 2021-2022  BitLogiK SAS
 
 This program is free software: you can redistribute it and/or modify  
 it under the terms of the GNU General Public License as published by  

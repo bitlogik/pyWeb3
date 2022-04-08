@@ -1,6 +1,14 @@
 
 # pyWeb3 changes log
 
+## 0.1.6
+
+* Allow QueryString in WS
+* Fix long HTTP replies
+* Raise waiting time when retry
+* Add logs filters RPC calls
+* Use a default web UserAgent
+
 ## 0.1.5
 
 * Improve code
