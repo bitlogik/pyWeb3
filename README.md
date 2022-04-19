@@ -65,8 +65,8 @@ See the web3_demo script in demo folder.
 `pyweb3.Web3Client( node_url, [user_agent], [retries] )`  
 Create a Web3 client from an URL.  
 node_url : the access URL (https or wss) to the RPC blockchain node.  
-user_agent: optional User-Agent header to use, a default web browser value is used. 
-retries: number of retries to the RPC when error. 3 by default.
+user_agent: optional User-Agent header to use, a default web browser value is used.  
+retries: number of retries to the RPC after an error. 2 by default.  
 The node URL can be HTTPS (https://...) or secure WebSocket (wss://...)  
 In case the connection is WebSocket, the connection tunnel is maintained opened until the Web3Client object is deleted. When using HTTPS, the connection is one-time query (POST) for each method call.
 
