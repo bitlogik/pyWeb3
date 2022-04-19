@@ -1,6 +1,11 @@
 
 # pyWeb3 changes log
 
+## 0.1.7
+
+* Default web UserAgent
+* Queries retries counted differently
+
 ## 0.1.6
 
 * Allow QueryString in WS
