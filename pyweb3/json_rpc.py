@@ -71,7 +71,9 @@ def json_rpc_unpack(buffer):
 class JSONRPCclient:
     """WebSocket and HTTPS JSON-RPC client"""
 
-    def __init__(self, url_api, user_agent=DEFAULT_USER_AGENT, retries=3):
+    def __init__(self, url_api, user_agent, retries):
+        if user_agent is None:
+            user_agent = DEFAULT_USER_AGENT
         if url_api.startswith("wss:"):
             self.cnx = WebSocketClient(url_api, user_agent)
         elif url_api.startswith("https:"):

@@ -23,7 +23,7 @@ from .json_rpc import JSONRPCclient
 class Web3Client:
     """Web3 RPC client"""
 
-    def __init__(self, node_url, user_agent="pyWeb3", retries=3):
+    def __init__(self, node_url, user_agent=None, retries=3):
         self.jsonrpc = JSONRPCclient(node_url, user_agent, retries)
 
     def get_balance(self, address, state="latest"):
