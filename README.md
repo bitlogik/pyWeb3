@@ -40,7 +40,7 @@ The only dependency is the [wsproto](https://pypi.org/project/wsproto/) v1.0.0 l
 
 ### Use
 
-Instanciate with `pyweb3.Web3Client`, then use methods this object to send RPC queries.
+Instanciate with `pyweb3.Web3Client`, then use methods of this object to send RPC queries.
 
 Basic example :
 
