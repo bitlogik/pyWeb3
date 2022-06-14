@@ -42,21 +42,8 @@ def json_encode(dataobj):
     return dumps(dataobj, separators=(",", ":"))
 
 
-# ---- JSON RPC functions to pack/unpack
-
-
-def json_rpc_pack_response(idmsg, result_obj):
-    """Build a JSON-RPC response."""
-    request_obj = {
-        "jsonrpc": "2.0",
-        "id": idmsg,
-        "result": result_obj,
-    }
-    return json_encode(request_obj).encode("utf8")
-
-
 def json_rpc_unpack(buffer):
-    """Decode a JSON-RPC call query : id, method, params."""
+    """Decode a JSON-RPC response : id, result."""
     try:
         resp_obj = loads(buffer)
     except Exception as exc:
