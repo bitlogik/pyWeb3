@@ -83,8 +83,9 @@ The following state options are possible :
 Default value is "latest"
 
 `.call( contractAddr, command_code, [data], [state] )`  
-Call eth_call and return the response, as "raw" 0x hex string.  
-For state options, see get_balance.
+Call RPC eth_call.  
+command_code and data must be provided in hex string (without "0x"). data is optional. For state options, see get_balance.  
+Return the response, as "raw" 0x hex string.  
 
 `.pushtx( TxHexStr )`  
 Broadcast a transaction on the blockchain network.  
@@ -105,7 +106,6 @@ Call "eth_newFilter" with the given parameter.
 
 `.get_filter( filter_id )`  
 Call "eth_getFilterLogs" with the given filter_id parameter.
-
 
 ## License
 
